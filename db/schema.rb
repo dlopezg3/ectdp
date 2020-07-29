@@ -10,10 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_28_143148) do
+ActiveRecord::Schema.define(version: 2020_07_29_160813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "deals", force: :cascade do |t|
+    t.bigint "ecid"
+    t.string "legal_state"
+    t.date "legal_state_date"
+    t.bigint "total_amount"
+    t.string "credit_entity"
+    t.string "subsidy_entity"
+    t.string "proyect_name"
+    t.string "proyect_stage"
+    t.string "proyect_apple"
+    t.string "land_plot"
+    t.bigint "mortgage_amount"
+    t.string "city"
+    t.bigint "subsidy_amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "trell_flag"
+    t.boolean "trello_flag"
+    t.boolean "change_flag"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

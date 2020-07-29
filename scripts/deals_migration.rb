@@ -1,0 +1,63 @@
+# rails runner scripts/deals_migration.rb
+require 'csv'
+
+csv_options = { col_sep: ';', force_quotes: true, quote_char: '"', headers: true}
+filepath = 'app/data/deals_files/INFORME_DE_ESTADOS_LEGALES.csv'
+count = 0
+
+def record_exists?(deal)
+  !Deal.find_by(ecid: deal[:ecid]).nil?
+end
+
+def compare_changes(deal, params)
+  original_deal = Deal.find_by(ecid: deal[:ecid])
+  if deal.diff?(original_deal)
+    original_deal.update(params)
+    original_deal.update(change_flag: true)
+  else
+    original_deal.update(change_flag: false)
+  end
+end
+
+CSV.foreach(filepath, csv_options) do |row|
+  break if count > 50
+  params = {ecid: row[4],
+            legal_state: row[112],
+            legal_state_date: row[117],
+            total_amount: row[109],
+            credit_entity: row[122],
+            subsidy_entity: row[126],
+            proyect_name: row[0],
+            proyect_stage: row[1],
+            proyect_apple: row[2],
+            land_plot: row[3],
+            mortgage_amount: row[122],
+            subsidy_amount: row[125]}
+  deal = Deal.new(params)
+  unless record_exists?(deal)
+    deal.change_flag = true
+    deal.save
+  else
+    compare_changes(deal, params)
+  end
+  count += 1
+end
+
+changed_deals = Deal.select { |d| d.change_flag }
+puts "Negocios con cambios:" if changed_deals.count > 0
+puts "No ha habido actualizaciones" if changed_deals.count == 0
+changed_deals.each {|d| puts d.ecid }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
