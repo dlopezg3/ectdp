@@ -1,2 +1,12 @@
-<h1>Deals#index</h1>
-<p>Find me in app/views/deals/index.html.erb</p>
+<div class="container">
+  <h1>Negocios Activos</h1>
+  <ul>
+    <% @deals.each do |d| %>
+      <li>
+        <%= d.ecid  %> -
+        <%= d.legal_state_dinamia  %> -
+        <%= d.legal_state.name  %>
+      </li>
+    <% end %>
+  </ul>
+</div>
