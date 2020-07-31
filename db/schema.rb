@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_160813) do
+ActiveRecord::Schema.define(version: 2020_07_29_214450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "deals", force: :cascade do |t|
     t.bigint "ecid"
-    t.string "legal_state"
+    t.string "legal_state_dinamia"
     t.date "legal_state_date"
     t.bigint "total_amount"
     t.string "credit_entity"
@@ -31,9 +31,17 @@ ActiveRecord::Schema.define(version: 2020_07_29_160813) do
     t.bigint "subsidy_amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "trell_flag"
     t.boolean "trello_flag"
     t.boolean "change_flag"
+    t.bigint "legal_state_id", null: false
+    t.index ["legal_state_id"], name: "index_deals_on_legal_state_id"
+  end
+
+  create_table "legal_states", force: :cascade do |t|
+    t.string "name"
+    t.string "board_tid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,4 +56,5 @@ ActiveRecord::Schema.define(version: 2020_07_29_160813) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "deals", "legal_states"
 end

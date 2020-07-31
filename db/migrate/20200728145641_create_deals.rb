@@ -2,7 +2,7 @@ class CreateDeals < ActiveRecord::Migration[6.0]
   def change
     create_table :deals do |t|
       t.bigint :ecid
-      t.string :legal_state
+      t.string :legal_state_dinamia
       t.date :legal_state_date
       t.bigint :total_amount
       t.string :credit_entity
