@@ -22,14 +22,12 @@ def compare_changes(deal, params)
 end
 
 def set_deal_legal_state(deal, legal_state)
-  # byebug if deal.ecid == 41926
   legal_trello_state = LS_EQUIVALENTS[legal_state.to_sym]
   deal.legal_state = LegalState.find_by(name: legal_trello_state)
   deal
 end
 
 CSV.foreach(filepath, csv_options) do |row|
-  # break if count > 3000
   legal_state = row[112]
   params = {ecid: row[4],
             legal_state_dinamia: legal_state,
@@ -52,22 +50,8 @@ CSV.foreach(filepath, csv_options) do |row|
     deal.save
     puts "Creando negocio #{deal.ecid}"
   end
-  # count += 1
 end
 
 changed_deals = Deal.select { |d| d.change_flag }
 puts "Negocios con cambios: #{changed_deals.count}" if changed_deals.count > 0
 puts "No ha habido actualizaciones" if changed_deals.count == 0
-# changed_deals.each {|d| puts d.ecid }
-
-
-
-
-
-
-
-
-
-
-
-
