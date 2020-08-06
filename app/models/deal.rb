@@ -37,15 +37,6 @@ class Deal < ApplicationRecord
     post_card(d, retries - 1)
   end
 
-  def self.set_labels(deal)
-    labels = []
-    bank_label = deal.legal_state.bank_labels.find_by(name: deal.credit_entity)
-    subsidy_label = deal.legal_state.subsidy_labels.find_by(name: deal.subsidy_entity )
-    labels << bank_label.tid unless bank_label.nil?
-    labels << subsidy_label.tid unless subsidy_label.nil?
-    labels
-  end
-
   def self.body_params(deal)
     labels = set_labels(deal)
     {
@@ -62,6 +53,19 @@ class Deal < ApplicationRecord
       # 'card_members': "",
       # 'pos': "bottom",
     }
+  end
+
+  def self.set_labels(deal)
+    labels = []
+    if !deal.credit_entity.empty?
+      bank_label = deal.legal_state.bank_labels.find_by(name: deal.credit_entity)
+    end
+    if !deal.subsidy_entity.empty?
+      subsidy_label = deal.legal_state.subsidy_labels.find_by(name: deal.subsidy_entity )
+    end
+    labels << bank_label.tid unless bank_label.nil?
+    labels << subsidy_label.tid unless subsidy_label.nil?
+    labels
   end
 
 end
