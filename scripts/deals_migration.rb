@@ -4,7 +4,6 @@ require_relative 'ls_equivalents'
 
 csv_options = { col_sep: ';', force_quotes: true, quote_char: '"', headers: true}
 filepath = 'app/data/deals_files/INFORME_DE_ESTADOS_LEGALES.csv'
-# count = 0
 
 def record_exists?(deal)
   !Deal.find_by(ecid: deal[:ecid]).nil?
@@ -27,13 +26,32 @@ def set_deal_legal_state(deal, legal_state)
   deal
 end
 
+def set_credit_entity(entity)
+  return "" if entity.nil?
+  return "BANCOLOMBIA" if entity == "BANCOLOMBIA"
+  return "DAVIVIENDA" if ["DAVIVIENDA", "DAVIVINDA", "DAVVIENDA"].include? entity
+  return "F.N.A." if ["F.N.A", "F.N.A.", "FNA"].include? entity
+  return "VENTA DIRECTA" if ["VENTA DIRECTA", "VTA DIRECTA"].include? entity
+  return "OTROS"
+end
+
+def set_subsidy_entity(ent1, ent2)
+  return "SIN SUBSIDIO" if ent1.nil?
+  return "MCY" if ent1 == "MCY"
+  return "SUBSIDIO CAJA" if ent2.nil?
+  return "SUBSDIO CAJA Y MCY"
+end
+
 CSV.foreach(filepath, csv_options) do |row|
   legal_state = row[112]
+  credit_entity = set_credit_entity(row[122])
+  subsidy_entity = set_subsidy_entity(row[126], row[133])
+
   params = {ecid: row[4],
             legal_state_dinamia: legal_state,
             total_amount: row[109],
-            credit_entity: row[122],
-            subsidy_entity: row[126],
+            credit_entity: credit_entity,
+            subsidy_entity: subsidy_entity,
             proyect_name: row[0],
             proyect_stage: row[1],
             proyect_apple: row[2],
