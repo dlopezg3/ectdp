@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_04_233634) do
+ActiveRecord::Schema.define(version: 2020_08_05_160131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bank_labels", force: :cascade do |t|
+    t.string "name"
+    t.string "tid"
+    t.bigint "legal_state_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["legal_state_id"], name: "index_bank_labels_on_legal_state_id"
+  end
 
   create_table "deals", force: :cascade do |t|
     t.bigint "ecid"
@@ -45,6 +54,15 @@ ActiveRecord::Schema.define(version: 2020_08_04_233634) do
     t.string "list_tid"
   end
 
+  create_table "subsidy_labels", force: :cascade do |t|
+    t.string "name"
+    t.string "tid"
+    t.bigint "legal_state_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["legal_state_id"], name: "index_subsidy_labels_on_legal_state_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -57,5 +75,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_233634) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bank_labels", "legal_states"
   add_foreign_key "deals", "legal_states"
+  add_foreign_key "subsidy_labels", "legal_states"
 end
