@@ -4,19 +4,17 @@ BankLabel.destroy_all
 SubsidyLabel.destroy_all
 
 def get_board_labels(ls, retries = 3)
-  puts "Comenzando con #{ls.name}"
   url = "https://api.trello.com/1/boards/#{ls.board_tid}/labels?key=#{ENV['TRELLO_KEY']}&token=#{ENV['TRELLO_TOKEN']}"
   response = HTTParty.get(url)
   res = JSON.parse(response.body)
+  puts "Comenzando con #{ls.name}"
   res.each do |label|
     create_label_on_legal_state(ls, label) unless label["name"].empty?
   end
   puts "------------------"
 rescue => e
   puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
-  if retries <= 1
-    raise
-  end
+  raise e if retries <= 1
   get_board_labels(ls, retries - 1)
 end
 
