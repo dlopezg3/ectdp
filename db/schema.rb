@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_05_160131) do
+ActiveRecord::Schema.define(version: 2020_08_06_201211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,7 +43,24 @@ ActiveRecord::Schema.define(version: 2020_08_05_160131) do
     t.boolean "trello_flag"
     t.boolean "change_flag"
     t.bigint "legal_state_id", null: false
+    t.bigint "savings_amount"
+    t.bigint "layoffs_amount"
+    t.bigint "initial_fee_amount"
+    t.bigint "clearance_amount"
+    t.bigint "initial_fee_subsidy_amount"
+    t.bigint "second_subsidy_amount"
+    t.bigint "swap_amount"
+    t.string "card_tid"
     t.index ["legal_state_id"], name: "index_deals_on_legal_state_id"
+  end
+
+  create_table "legal_state_durations", force: :cascade do |t|
+    t.string "name"
+    t.integer "days"
+    t.bigint "legal_state_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["legal_state_id"], name: "index_legal_state_durations_on_legal_state_id"
   end
 
   create_table "legal_states", force: :cascade do |t|
@@ -52,6 +69,7 @@ ActiveRecord::Schema.define(version: 2020_08_05_160131) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "list_tid"
+    t.boolean "grouped", default: false
   end
 
   create_table "subsidy_labels", force: :cascade do |t|
@@ -77,5 +95,6 @@ ActiveRecord::Schema.define(version: 2020_08_05_160131) do
 
   add_foreign_key "bank_labels", "legal_states"
   add_foreign_key "deals", "legal_states"
+  add_foreign_key "legal_state_durations", "legal_states"
   add_foreign_key "subsidy_labels", "legal_states"
 end
