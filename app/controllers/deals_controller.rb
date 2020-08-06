@@ -5,6 +5,6 @@ class DealsController < ApplicationController
                  .active
                  .with_board
     @deals = @deals.includes(:legal_state).limit(5)
-    Deal.iterate_over_deals(@deals)
+    Deal.create_trello_cards(@deals)
   end
 end
