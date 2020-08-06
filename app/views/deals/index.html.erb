@@ -1,10 +1,9 @@
 <div class="container">
-  <h1>Negocios Activos</h1>
+  <h1>Negocios subidos en la última carga</h1>
   <ul>
     <% @deals.each do |d| %>
       <li>
         <%= d.ecid  %> -
-        <%= d.legal_state_dinamia  %> -
         <%= d.legal_state.name  %>
       </li>
     <% end %>
