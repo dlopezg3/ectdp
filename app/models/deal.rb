@@ -15,6 +15,7 @@ class Deal < ApplicationRecord
                                          .where.not(legal_states: {name: "LIBRE"})
                                        }
   scope :with_board, -> { joins(:legal_state).where.not(legal_states: {board_tid: ""})}
+
   def self.iterate_over_deals(deals)
     deals.each do |d|
       post_card(d) if !d.legal_state.board_tid.empty?
@@ -26,12 +27,9 @@ class Deal < ApplicationRecord
   def self.post_card(d, retries = 3)
     params = body_params(d)
     url = "https://api.trello.com/1/cards"
-    # byebug
-    p d
-    p d.legal_state.name
     response = HTTParty.post(url, query: params)
     d.update(trello_flag: true, change_flag: false)
-  rescue Net::OpenTimeout => e
+  rescue => e
     puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
     if retries <= 1
       raise
@@ -39,7 +37,17 @@ class Deal < ApplicationRecord
     post_card(d, retries - 1)
   end
 
+  def self.set_labels(deal)
+    labels = []
+    bank_label = deal.legal_state.bank_labels.find_by(name: deal.credit_entity)
+    subsidy_label = deal.legal_state.subsidy_labels.find_by(name: deal.subsidy_entity )
+    labels << bank_label.tid unless bank_label.nil?
+    labels << subsidy_label.tid unless subsidy_label.nil?
+    labels
+  end
+
   def self.body_params(deal)
+    labels = set_labels(deal)
     {
       'key': "#{ENV['TRELLO_KEY']}",
       'token': "#{ENV['TRELLO_TOKEN']}",
@@ -47,13 +55,14 @@ class Deal < ApplicationRecord
       'name': "#{deal.ecid}",
       'desc': "#{deal.proyect_stage}",
       # 'due': "",
-      'board_id': "#{deal.legal_state.board_tid}"
+      'board_id': "#{deal.legal_state.board_tid}",
       # 'member_ids': "",
       # 'last_activity_date': "",
-      # 'card_labels': "",
+      'idLabels': labels
       # 'card_members': "",
       # 'pos': "bottom",
     }
   end
+
 end
 
