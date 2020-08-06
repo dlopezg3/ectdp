@@ -42,22 +42,41 @@ def set_subsidy_entity(ent1, ent2)
   return "SUBSDIO CAJA Y MCY"
 end
 
-CSV.foreach(filepath, csv_options) do |row|
-  legal_state = row[112]
+def set_ls_date(str_date)
+  return nil if str_date.nil?
+
+  DateTime.parse(str_date).to_date
+end
+
+def deal_params(row, legal_state)
   credit_entity = set_credit_entity(row[122])
   subsidy_entity = set_subsidy_entity(row[126], row[133])
 
-  params = {ecid: row[4],
-            legal_state_dinamia: legal_state,
-            total_amount: row[109],
-            credit_entity: credit_entity,
-            subsidy_entity: subsidy_entity,
-            proyect_name: row[0],
-            proyect_stage: row[1],
-            proyect_apple: row[2],
-            land_plot: row[3],
-            mortgage_amount: row[122],
-            subsidy_amount: row[125]}
+  { ecid: row[4],
+    legal_state_dinamia: legal_state,
+    total_amount: row[109],
+    credit_entity: credit_entity,
+    subsidy_entity: subsidy_entity,
+    proyect_name: row[0],
+    proyect_stage: row[1],
+    proyect_apple: row[2],
+    land_plot: row[3],
+    mortgage_amount: row[122],
+    subsidy_amount: row[125],
+    savings_amount: row[123],
+    layoffs_amount: row[127],
+    initial_fee_amount: row[129],
+    clearance_amount: row[130],
+    initial_fee_subsidy_amount: row[131],
+    second_subsidy_amount: row[132],
+    swap_amount: row[134],
+    legal_state_date: set_ls_date(row[117])
+  }
+end
+
+CSV.foreach(filepath, csv_options) do |row|
+  legal_state = row[112]
+  params = deal_params(row, legal_state)
   deal = Deal.new(params)
   set_deal_legal_state(deal, legal_state)
   if record_exists?(deal)
