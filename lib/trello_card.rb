@@ -18,7 +18,7 @@ class TrelloCard
 
   def body_params
     labels = set_labels
-    # due_date = set_due_date
+    due_date = set_due_date
     # list_id = set_list
     {
       'key': "#{ENV['TRELLO_KEY']}",
@@ -26,7 +26,7 @@ class TrelloCard
       'idList': "#{@deal.legal_state.list_tid}",
       'name': "#{@deal.ecid}",
       'desc': "#{@deal.proyect_stage}",
-      'due': "",
+      'due': due_date,
       'board_id': "#{@deal.legal_state.board_tid}",
       # 'member_ids': "",
       # 'last_activity_date': "",
@@ -47,5 +47,15 @@ class TrelloCard
     labels << bank_label.tid unless bank_label.nil?
     labels << subsidy_label.tid unless subsidy_label.nil?
     labels
+  end
+
+  def set_due_date
+    legal_state_combination = LegalStateDuration.where(legal_state: @deal.legal_state)
+                                                .where(credit_entity: @deal.credit_entity)
+                                                .where(subsidy_entity: @deal.subsidy_entity)
+                                                .first
+    return "" if legal_state_combination.nil?
+
+    return (@deal.legal_state_date + legal_state_combination[:days].days).to_s
   end
 end
