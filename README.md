@@ -6,9 +6,9 @@ esos negocios_
 
 ## Comenzando 🚀
 
-_Para comenzar se debe hacer un seed de las tablas de legal_states, labels y legal_state_duration_
+Para comenzar se debe hacer un seed de las tablas de legal_states, labels y legal_state_duration
 
-_Esto se hace con los siguientes comandos_
+Esto se hace con los siguientes comandos:
 
 ```
   rails db:seed:legal_state
@@ -18,7 +18,7 @@ _Esto se hace con los siguientes comandos_
 
 ## Primera carga de negocios en base de datos 🛫
 
-_Para realizar la carga de negocios en base de datos local se debe:_
+Para realizar la carga de negocios en base de datos local se debe:
 
  1. En la carpeta app/data/deals_files agregar el informe de estados legales en formato .csv con el nombre: INFORME_DE_ESTADOS_LEGALES.csv
  2. Ejecutar el siguiente comando:
@@ -27,7 +27,7 @@ _Para realizar la carga de negocios en base de datos local se debe:_
   rails r scripts/deals_migration.rb
 ```
 
-_Este script carga todos los nuevos negocios del informe (en caso de no tener otros guardados con aterioridad) en base de datos._
+Este script carga todos los nuevos negocios del informe (en caso de no tener otros guardados con aterioridad) en base de datos.
 
 ## Actualización de negocios en base de datos  🎢
 
@@ -38,14 +38,15 @@ _Este script carga todos los nuevos negocios del informe (en caso de no tener ot
   rails r scripts/deals_migration.rb
 ```
 
-_Este script revisa cada negocio y si encuentra algún cambio en los atributos lo actualiza._
-_En caso de encontrar un registro nuevo lo agrega en base de datos_
+Este script revisa cada negocio y si encuentra algún cambio en los atributos lo actualiza.
+En caso de encontrar un registro nuevo lo agrega en base de datos
 
 ## Carga de tarjetas en Trello ⬆️
 
-  _ir la url a #{host}/deals_
-  _Esto crea las nuevas tarjetas en caso de haber._
-  _Solo actualiza según los scopes configurados en el modelo Deal_
+  * ir la url a #{host}/deals
+
+  Esto crea las nuevas tarjetas en caso de haber.
+  Solo actualiza según los scopes configurados en el modelo Deal
 
 ### Construido con 🛠️
 
