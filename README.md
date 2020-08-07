@@ -48,7 +48,7 @@ En caso de encontrar un registro nuevo lo agrega en base de datos
   Esto crea las nuevas tarjetas en caso de haber.
   Solo actualiza según los scopes configurados en el modelo Deal
 
-### Construido con 🛠️
+## Construido con 🛠️
 
 * Ruby on Rails 6 - El framework web usado
 * Bundler - Manejador de dependencias
