@@ -14,6 +14,7 @@ class Deal < ApplicationRecord
                                          .where.not(legal_states: {name: "ENTREGA DE VIVIENDA"})
                                          .where.not(legal_states: {name: "DESEMBOLSADO"})
                                          .where.not(legal_states: {name: "LIBRE"})
+                                       }
   scope :with_board, -> { joins(:legal_state).where.not(legal_states: {board_tid: ""}) }
   scope :recent, -> { where("legal_state_date > ?", DateTime.parse('01/01/2020').to_date) }
 
