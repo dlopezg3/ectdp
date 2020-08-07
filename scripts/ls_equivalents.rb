@@ -37,8 +37,8 @@ LS_EQUIVALENTS = {"A DESISTIR": "A DESISTIR",
                   "SUBSIDIO RADICADO": "SUBSIDIO RADICADO",
                   "TRAMITE": "TRAMITE",
                   "TRAMITE - ACTUALIZACION": "TRAMITE - ACTUALIZACION",
-                  "VENDIDA": "VENDIDA"
-                }
+                  "VENDIDA": "VENDIDA",
+                  "FIRMA ESC. CONSTRUCTORA": "FIRMA ESC. CONSTRUCTORA"                }
 
 
 
