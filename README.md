@@ -39,7 +39,7 @@ Este script carga todos los nuevos negocios del informe (en caso de no tener otr
 ```
 
 Este script revisa cada negocio y si encuentra algún cambio en los atributos lo actualiza.
-En caso de encontrar un registro nuevo lo agrega en base de datos
+En caso de encontrar un registro nuevo lo agrega en base de datos.
 
 ## Carga de tarjetas en Trello ⬆️
 
@@ -55,4 +55,4 @@ En caso de encontrar un registro nuevo lo agrega en base de datos
 
 
 ---
-⌨️ con ❤️ por Daniel López(https://github.com/dlopezg3) 😊
+⌨️ con ❤️ por Daniel López(https://github.com/dlopezg3) 🚴🏼‍♂️
