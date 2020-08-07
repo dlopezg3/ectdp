@@ -14,18 +14,19 @@ class Deal < ApplicationRecord
                                          .where.not(legal_states: {name: "ENTREGA DE VIVIENDA"})
                                          .where.not(legal_states: {name: "DESEMBOLSADO"})
                                          .where.not(legal_states: {name: "LIBRE"})
-                                       }
-  scope :with_board, -> { joins(:legal_state).where.not(legal_states: {board_tid: ""})}
+  scope :with_board, -> { joins(:legal_state).where.not(legal_states: {board_tid: ""}) }
+  scope :recent, -> { where("legal_state_date > ?", DateTime.parse('01/01/2020').to_date) }
 
   def self.create_trello_cards(deals)
     raise "No se han cargado los estados legales" if LegalState.count == 0
     raise "No se han cargado las labels" if BankLabel.count == 0
+    raise "No se han cargado los deals" if Deal.count == 0
 
     deals.each do |d|
-      if !d.legal_state.board_tid.empty?
-        card = TrelloCard.new(d)
-        card.post
-      end
+      next if d.legal_state.board_tid.empty?
+
+      card = TrelloCard.new(d)
+      card.post
     end
   end
 end
