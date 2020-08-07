@@ -43,10 +43,10 @@ En caso de encontrar un registro nuevo lo agrega en base de datos.
 
 ## Carga de tarjetas en Trello ⬆️
 
-  * ir la url a #{host}/deals
+* ir la url a #{host}/deals
 
-  Esto crea las nuevas tarjetas en caso de haber.
-  Solo actualiza según los scopes configurados en el modelo Deal
+Esto crea las nuevas tarjetas en caso de haber.
+Solo actualiza según los scopes configurados en el modelo Deal
 
 ## Construido con 🛠️
 
