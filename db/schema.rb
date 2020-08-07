@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_201211) do
+ActiveRecord::Schema.define(version: 2020_08_06_214421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,11 +55,12 @@ ActiveRecord::Schema.define(version: 2020_08_06_201211) do
   end
 
   create_table "legal_state_durations", force: :cascade do |t|
-    t.string "name"
     t.integer "days"
     t.bigint "legal_state_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "credit_entity"
+    t.string "subsidy_entity"
     t.index ["legal_state_id"], name: "index_legal_state_durations_on_legal_state_id"
   end
 
