@@ -34,6 +34,7 @@ legal_states = [
                 { name: "SUBSIDIO RADICADO", board_tid: ""},
                 { name: "TRAMITE", board_tid: ""},
                 { name: "TRAMITE - ACTUALIZACION", board_tid: ""},
+                { name: "FIRMA ESC. CONSTRUCTORA", board_tid: "5f1857980fbd968e3cff4b08"},
                 { name: "VENDIDA", board_tid: ""}
               ]
 
