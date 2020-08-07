@@ -16,7 +16,7 @@ _Esto se hace con los siguientes comandos_
   rails db:seed:legal_state_duration
 ```
 
-## Primera carga de negocios en base de datos 📋
+## Primera carga de negocios en base de datos 🛫
 
 _Para realizar la carga de negocios en base de datos local se debe:_
 
@@ -29,7 +29,7 @@ _Para realizar la carga de negocios en base de datos local se debe:_
 
 _Este script carga todos los nuevos negocios del informe (en caso de no tener otros guardados con aterioridad) en base de datos._
 
-## Actualización de negocios en base de datos 📋
+## Actualización de negocios en base de datos  🎢
 
  1. En la carpeta app/data/deals_files reemplazar el informe de estados legales en formato .csv con el mismo nombre
  2. Ejecutar el mismo comando:
