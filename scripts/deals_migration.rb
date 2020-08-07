@@ -45,7 +45,7 @@ end
 def set_ls_date(str_date)
   return nil if str_date.nil?
 
-  DateTime.parse(str_date).to_date
+  DateTime.strptime(str_date, "%d/%m/%y").to_date
 end
 
 def deal_params(row, legal_state)
@@ -70,8 +70,7 @@ def deal_params(row, legal_state)
     initial_fee_subsidy_amount: row[131],
     second_subsidy_amount: row[132],
     swap_amount: row[134],
-    legal_state_date: set_ls_date(row[117])
-  }
+    legal_state_date: set_ls_date(row[117]) }
 end
 
 CSV.foreach(filepath, csv_options) do |row|
