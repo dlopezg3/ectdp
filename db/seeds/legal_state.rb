@@ -1,4 +1,5 @@
 Deal.destroy_all
+LegalStateDuration.destroy_all
 LegalState.destroy_all
 
 legal_states = [
@@ -13,7 +14,7 @@ legal_states = [
                 { name: "CASO INMOBILIARIA", board_tid: "5f36fec6e8daef3469ac1b1a", list_id:"5f36fec6e8daef3469ac1b1a"},
                 { name: "DESEMBOLSADO", board_tid: "5f371c7f7df57a1f050ba0fb", list_id:"5f371c7f7df57a1f050ba0fc"},
                 { name: "ELAB ESCRITURACION", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f37046a22ad1929d4cdef32"},
-                { name: "EN ESPERA DE RESOLUCION MCY (PROCESO 027)", board_tid: "5f331857625722083bc5d3ea", list_id:"5f3318629447ce1c1cf1490f"},
+                { name: "EN ESPERA DE RESOLUCION MCY (PROCESO 027)", board_tid: "", list_id:""},
                 { name: "ENTRADA DE REGISTRO", board_tid: "5f371cebf6497f5db4b73b5f", list_id:"5f371cebf6497f5db4b73b60"},
                 { name: "ENTREGA DE VIVIENDA", board_tid: "5f37006b39980f8c9b4e4aef", list_id:"5f37006b39980f8c9b4e4af0"},
                 { name: "ESTUDIO TITULO (PROCESO 027)", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f332347c7e13a4418c18a91"},
@@ -21,7 +22,7 @@ legal_states = [
                 { name: "FIRMA BANCO CONSTRUCTOR", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f1eef9b20e520012f5bd217"},
                 { name: "FIRMA ESC. CLIENTE", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f185c45782e168d081a7a30"},
                 { name: "FIRMA FIDUCIA", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f1eef9fdfaa3d2441228a85"},
-                { name: "LIBRE", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f1ef05b5cd4c8412a10ab89"},
+                { name: "LIBRE", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:""},
                 { name: "LIBRE INVERSION", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f1ef05b5cd4c8412a10ab8c"},
                 { name: "LIQUIDACION", board_tid: "5f1ef15e8abfd186d989fcd2", list_id:"5f1ef15e8abfd186d989fcd4"},
                 { name: "NEGADO", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f36fc940b177b2ba3c7726c"},
@@ -32,28 +33,13 @@ legal_states = [
                 { name: "SALDO EN EFECTIVO", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f2accfee570290e693af3f8"},
                 { name: "SALIDA DE REGISTRO", board_tid: "5f371cebf6497f5db4b73b5f", list_id:"5f371cebf6497f5db4b73b62"},
                 { name: "SUBSIDIO RADICADO", board_tid: "5f371c7f7df57a1f050ba0fb", list_id:"5f371c7f7df57a1f050ba0fd"},
-                { name: "TRAMITE", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f1ef05b5cd4c8412a10ab88"},
+                { name: "TRAMITE", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f36fbc63a1e538518df12a3"},
                 { name: "TRAMITE - ACTUALIZACION", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f36fc909abba8143fd9a207"},
                 { name: "FIRMA ESC. CONSTRUCTORA", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f2d7b023f782403bb6b0ab2"},
                 { name: "VENDIDA", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f1ef05b5cd4c8412a10ab8a"},
                 { name: "RADICADO EN BANCO Y CAJA", board_tid: "5f331cd2aa36eb25e0ba2327", list_id:"5f331cdc0aee5a416f58ed9a"},
+                { name: "EN ESPERA DE RESOLUCION PARA ENVIAR A ESCRITURAR", board_tid: "", list_id:""},
               ]
-
-# def get_board_list(ls, retries = 3)
-#   url = "https://api.trello.com/1/boards/#{ls[:board_tid]}/lists?key=#{ENV['TRELLO_KEY']}&token=#{ENV['TRELLO_TOKEN']}"
-#   response = HTTParty.get(url)
-#   res = JSON.parse(response.body)
-
-#   if ls[:grouped]
-#     return res.select { |board_list| board_list["name"] == ls[:name] }.first["id"]
-#   end
-#   return res.first["id"]
-
-# rescue => e
-#   puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
-#   raise if retries <= 1
-#   get_board_list(ls, retries - 1)
-# end
 
 legal_states.each do |ls|
   list_id = ls[:list_id]
