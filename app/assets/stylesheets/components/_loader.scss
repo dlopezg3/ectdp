@@ -1,0 +1,29 @@
+.loader {
+  border: 16px solid #7C8483 ; /* Light grey */
+  border-top: 16px solid #15616D; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 50vh;
+  text-align: center;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.custom-modal {
+  height: 100vh;
+  width: 100vw;
+  background-color: #C2C1C2;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  right: 0;
+}

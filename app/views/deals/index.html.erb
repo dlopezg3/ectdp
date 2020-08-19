@@ -1,11 +1,18 @@
-<div class="container">
-  <h1>Negocios subidos en la última carga</h1>
-  <ul>
-    <% @deals.each do |d| %>
-      <li>
-        <%= d.ecid  %> -
-        <%= d.legal_state.name  %>
-      </li>
-    <% end %>
-  </ul>
+<div data-controller="loader">
+  <div data-target="loader.spinner" class="custom-modal d-none">
+    <div class="loader">
+    </div>
+  </div>
+  <div class="container pt-4">
+    <%= button_to "Actualizar Tarjetas", deals_update_cards_path, "data-action":"click->loader#showLoader" %>
+    <h1>Negocios subidos en la última carga</h1>
+    <ul>
+      <% @deals.each do |d| %>
+        <li>
+          <%= d.ecid  %> -
+          <%= d.legal_state.name  %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
