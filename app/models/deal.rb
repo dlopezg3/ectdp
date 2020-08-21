@@ -13,6 +13,7 @@ class Deal < ApplicationRecord
   scope :active, -> { joins(:legal_state).where.not(legal_states: {name: "VENDIDA"})
                                          .where.not(legal_states: {name: "LIBRE"})
                                        }
+  # scope :aprobados, -> { joins(:legal_state).where(legal_states: {name: "APROBADO"})}
   scope :recent, -> { where("legal_state_date > ?", DateTime.parse('01/01/2020').to_date) }
 
   scope :unupload, -> { where(trello_flag: false) }
@@ -24,7 +25,6 @@ class Deal < ApplicationRecord
     raise "No se han cargado los estados legales" if LegalState.count == 0
     raise "No se han cargado las labels" if BankLabel.count == 0
     raise "No se han cargado los deals" if Deal.count == 0
-
 
     deals.each do |d|
       next if d.legal_state.board_tid.empty?
