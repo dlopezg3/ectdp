@@ -1,7 +1,7 @@
 LS_EQUIVALENTS = {"A DESISTIR": "A DESISTIR",
                   "A REUBICAR": "A REUBICAR",
                   "ACLARATORIA AL SUBSIDIO": "ACLARATORIA AL SUBSIDIO",
-                  "APROBADO": "APROBADO ",
+                  "APROBADO": "APROBADO",
                   "APROBADO - ACTUALIZACION": "APROBADO ",
                   "AVALUO": "AVALUO FINAL",
                   "AVALUO - ACTUALIZACION": "AVALUO FINAL",
