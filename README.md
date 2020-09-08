@@ -48,6 +48,21 @@ En caso de encontrar un registro nuevo lo agrega en base de datos.
 Esto crea las nuevas tarjetas en caso de haber.
 Solo actualiza según los scopes configurados en el modelo Deal
 
+## Añadir una nueva etiqueta en los tableros 🎗
+
+  1. Se debe crear la etiqueta en todos los tableros (esto se puede hacer pasando una tarjeta con la etiqueta por todos los tableros)
+  2. Se ejecuta el siguiente comando en terminal:
+   ```
+    rails db:seed:labels
+   ```
+  3. Se ejecuta el script de migración de etiquetas:
+   ```
+    rails runner scripts/add_project_labels_to_cards.rb
+   ```
+
+
+
+
 ## Construido con 🛠️
 
 * Ruby on Rails 6 - El framework web usado
