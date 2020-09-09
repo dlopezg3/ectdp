@@ -52,7 +52,7 @@ end
     labels = []
 
     bank_label = set_bank_label                   if !@deal.credit_entity.empty?
-    subsidy_label = set_subsidy_entit             if !@deal.subsidy_entity.empty?
+    subsidy_label = set_subsidy_entity            if !@deal.subsidy_entity.empty?
     project_label = set_project_label             if !@deal.proyect_name.empty?
     project_stage_label = set_project_stage_label if !@deal.proyect_stage.empty?
 
