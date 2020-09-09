@@ -12,7 +12,8 @@
           <%= d.ecid  %> -
           <%= d.legal_state.name  %> -
           <%= d.credit_entity  %> -
-          <%= d.subsidy_entity  %>
+          <%= d.subsidy_entity  %> -
+          Modificado: <%= d.updated_at.hour - 5 %>:<%= d.updated_at.min %>
         </li>
       <% end %>
     </ul>
