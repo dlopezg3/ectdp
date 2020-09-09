@@ -10,9 +10,10 @@ class Deal < ApplicationRecord
 
   belongs_to :legal_state
 
-  scope :active, -> { joins(:legal_state).where.not(legal_states: {name: "VENDIDA"})
-                                         .where.not(legal_states: {name: "LIBRE"})
+  scope :active, -> { joins(:legal_state).where.not(legal_states: {name: "LIBRE"})
+                                         # .where.not(legal_states: {name: "VENDIDA"})
                                        }
+
   # scope :aprobados, -> { joins(:legal_state).where(legal_states: {name: "APROBADO"})}
   scope :recent, -> { where("legal_state_date > ?", DateTime.parse('01/01/2020').to_date) }
 
@@ -31,6 +32,7 @@ class Deal < ApplicationRecord
 
       card = TrelloCard.new(d)
       card.post
+      card.create_compromises_checklist
     end
   end
 end
