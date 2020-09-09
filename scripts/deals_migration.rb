@@ -23,6 +23,9 @@ end
 def set_deal_legal_state(deal, legal_state)
   legal_trello_state = LS_EQUIVALENTS[legal_state.to_sym]
   deal.legal_state = LegalState.find_by(name: legal_trello_state)
+  if deal.legal_state == "APROBADO" and deal.credit_entity == "DAVIVIENDA"
+    deal.legal_state_date = LegalState.find_by(name: "APROBADO DAVIVIENDA")
+  end
   deal
 end
 
@@ -39,7 +42,7 @@ def set_subsidy_entity(ent1, ent2)
   return "SIN SUBSIDIO" if ent1.nil?
   return "MCY" if ent1 == "MCY"
   return "SUBSIDIO CAJA" if ent2.nil?
-  return "SUBSDIO CAJA Y MCY"
+  return "SUBSIDIO CAJA Y MCY"
 end
 
 def set_ls_date(str_date)
