@@ -10,7 +10,9 @@
       <% @deals.each do |d| %>
         <li>
           <%= d.ecid  %> -
-          <%= d.legal_state.name  %>
+          <%= d.legal_state.name  %> -
+          <%= d.credit_entity  %> -
+          <%= d.subsidy_entity  %>
         </li>
       <% end %>
     </ul>
