@@ -7,9 +7,10 @@ legal_states = [
                 { name: "A REUBICAR", board_tid: "5f36fec6e8daef3469ac1b1a", list_id:"5f36fec6e8daef3469ac1b1c"},
                 { name: "ACLARATORIA AL SUBSIDIO", board_tid: "5f371c7f7df57a1f050ba0fb", list_id:"5f371c7f7df57a1f050ba0ff"},
                 { name: "APROBADO", board_tid: "5f36fd2572173a014e3bc186", list_id:"5f36fd2572173a014e3bc187"},
+                { name: "APROBADO DAVIVIENDA", board_tid: "5f3ed40f91c99e492decaa6d", list_id:"5f4ff1dd7c37068bf74f48e7"},
                 { name: "AVALUO FINAL", board_tid: "5f36fd2572173a014e3bc186", list_id:"5f36fd2572173a014e3bc189"},
                 { name: "AVALUO PRELIMINAR", board_tid: "5f3ed40f91c99e492decaa6d", list_id:"5f3ed40f91c99e492decaa6f"},
-                { name: "AVALÚO DAVIVIENDA", board_tid: "5f3ed40f91c99e492decaa6d", list_id:"5f3ed40f91c99e492decaa6e"},
+                { name: "AVALÚO DAVIVIENDA", board_tid: "5f3ed40f91c99e492decaa6d", list_id:"5f4ff1dd7c37068bf74f48e7"},
                 { name: "CARTA DE NOVEDAD", board_tid: "5f36fda6193f8676acdd47cd", list_id:"5f36fda6193f8676acdd47ce"},
                 { name: "CARTA DE RATIFICACION ", board_tid: "5f36fde4c9024a470fc8934c", list_id:"5f36fde4c9024a470fc8934d"},
                 { name: "CASO INMOBILIARIA", board_tid: "5f36fec6e8daef3469ac1b1a", list_id:"5f36fec6e8daef3469ac1b1a"},
@@ -37,10 +38,10 @@ legal_states = [
                 { name: "TRAMITE", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f36fbc63a1e538518df12a3"},
                 { name: "TRAMITE - ACTUALIZACION", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f36fc909abba8143fd9a207"},
                 { name: "FIRMA ESC. CONSTRUCTORA", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f2d7b023f782403bb6b0ab2"},
-                { name: "VENDIDA", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f1ef05b5cd4c8412a10ab8a"},
+                { name: "VENDIDA", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id:"5f57f1493d322a1ae2c672e3"},
                 { name: "RADICADO EN BANCO Y CAJA", board_tid: "5f331cd2aa36eb25e0ba2327", list_id:"5f331cdc0aee5a416f58ed9a"},
                 { name: "EN ESPERA RESOLUCION MCY PARA ESTUDIO TITULO", board_tid: "5f3ecabe6a9adb3d1376cbce", list_id:"5f3ecabe6a9adb3d1376cbcf"},
-                { name: "NUMERACIÓN ESCRITURA", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f4059d675d279624c0a34bf"},
+                { name: "NUMERACION ESCRITURA", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f4059d675d279624c0a34bf"},
               ]
 
 legal_states.each do |ls|
