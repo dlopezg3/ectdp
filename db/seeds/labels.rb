@@ -18,6 +18,8 @@ rescue Net::ReadTimeout => e
   puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
   raise e if retries <= 1
   get_board_labels(ls, retries - 1)
+rescue JSON::ParserError => e
+  abort "OJO ------------------- la url tiene una falla"
 end
 
 def create_label_on_legal_state(ls, label)
