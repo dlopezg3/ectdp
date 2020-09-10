@@ -16,6 +16,6 @@ class DealsController < ApplicationController
   end
 
   def set_limit
-    @limit = 50
+    @limit = 100
   end
 end
