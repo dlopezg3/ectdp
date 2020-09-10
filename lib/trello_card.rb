@@ -7,14 +7,14 @@ class TrelloCard
   def post(retries = 3)
     response = HTTParty.post(@url, query: body_params)
     @deal.update(trello_flag: true, change_flag: false, card_tid: response["id"])
-  rescue => e
+  rescue Net::ReadTimeout => e
     puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
     raise if retries <= 1
     post(retries - 1)
   end
 
   def create_compromises_checklist(retries = 3)
-    puts "#{@deal.card_tid} - #{@deal.ecid}"
+    puts "#{@deal.card_tid} - #{@deal.ecid} - #{@deal.legal_state.name}"
     checklist_url = "https://api.trello.com/1/cards/#{@deal.card_tid}/checklists?"
     response = HTTParty.post(checklist_url, query: compromise_body_params)
   rescue => e
@@ -41,26 +41,31 @@ class TrelloCard
   end
 
   def compromise_body_params
-  {
-    'key': "#{ENV['TRELLO_KEY']}",
-    'token': "#{ENV['TRELLO_TOKEN']}",
-    'name': "Compromisos",
-  }
-end
+    {
+      'key': "#{ENV['TRELLO_KEY']}",
+      'token': "#{ENV['TRELLO_TOKEN']}",
+      'name': "Compromisos",
+    }
+  end
 
   def set_labels
     labels = []
-
-    bank_label = set_bank_label                   if !@deal.credit_entity.empty?
-    subsidy_label = set_subsidy_entity            if !@deal.subsidy_entity.empty?
-    project_label = set_project_label             if !@deal.proyect_name.empty?
-    project_stage_label = set_project_stage_label if !@deal.proyect_stage.empty?
+    bank_label = set_bank_label                   if has_value?("credit_entity")
+    subsidy_label = set_subsidy_entity            if has_value?("subsidy_entity")
+    project_label = set_project_label             if has_value?("proyect_name")
+    project_stage_label = set_project_stage_label if has_value?("proyect_stage")
 
     labels << bank_label.tid          unless bank_label.nil?
     labels << subsidy_label.tid       unless subsidy_label.nil?
-    labels << project_label.tid       unless project_label.nil?
+    # labels << project_label.tid       unless project_label.nil?
     labels << project_stage_label.tid unless project_stage_label.nil?
     labels
+  end
+
+  def has_value?(arg)
+    return false if @deal.public_send(arg).nil?
+    return false if @deal.public_send(arg).empty?
+    true
   end
 
   def set_bank_label
@@ -99,7 +104,6 @@ end
   end
 
   def set_list
-    byebug if @deal.ecid == "45018"
     return @deal.legal_state.list_tid unless aprobado_davivienda?
     return LegalState.find_by(name: "AVALÚO DAVIVIENDA").list_tid
   end
