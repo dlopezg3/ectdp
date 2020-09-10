@@ -13,20 +13,38 @@ def compare_changes(deal, params)
   original_deal = Deal.find_by(ecid: deal[:ecid])
   if deal.diff?(original_deal)
     original_deal.update(params)
-    original_deal.update(change_flag: true)
-    puts "Actualizando negocio #{deal.ecid}"
+    change_flag_status_true(original_deal, deal)
+  elsif deal.legal_state_id != original_deal.legal_state_id
+    new_legal_state = LegalState.find(deal.legal_state_id)
+    original_deal.update(legal_state: new_legal_state)
+    change_flag_status_true(original_deal, deal)
   else
     original_deal.update(change_flag: false)
   end
 end
 
+def change_flag_status_true(original_deal, deal)
+  original_deal.update(change_flag: true)
+  puts "Actualizando negocio #{original_deal.ecid} - Estado en dinamia: #{deal.legal_state_dinamia}"
+end
+
 def set_deal_legal_state(deal, legal_state)
   legal_trello_state = LS_EQUIVALENTS[legal_state.to_sym]
+  db_legal_state  = LegalState.find_by(name: legal_trello_state)
+  abort "OJO ------------------- No existe en Trello el estado legal: #{legal_state}" if invalid_status(deal, db_legal_state)
+
   deal.legal_state = LegalState.find_by(name: legal_trello_state)
   if deal.legal_state == "APROBADO" and deal.credit_entity == "DAVIVIENDA"
     deal.legal_state_date = LegalState.find_by(name: "APROBADO DAVIVIENDA")
   end
   deal
+end
+
+def invalid_status(deal, db_legal_state)
+  return false if !db_legal_state.nil?
+  return false if deal.legal_state_date.nil?
+  return false if deal.legal_state_date < Date.parse('01-01-2020')
+  true
 end
 
 def set_credit_entity(entity)
@@ -35,7 +53,7 @@ def set_credit_entity(entity)
   return "DAVIVIENDA" if ["DAVIVIENDA", "DAVIVINDA", "DAVVIENDA"].include? entity
   return "F.N.A." if ["F.N.A", "F.N.A.", "FNA"].include? entity
   return "VENTA DIRECTA" if ["VENTA DIRECTA", "VTA DIRECTA"].include? entity
-  return "OTROS"
+  return "OTROS" if ["OTROS"].include? entity
 end
 
 def set_subsidy_entity(ent1, ent2)
@@ -80,6 +98,9 @@ CSV.foreach(filepath, csv_options) do |row|
   legal_state = row[112]
   params = deal_params(row, legal_state)
   deal = Deal.new(params)
+  # next unless deal.ecid == 25314
+  # byebug
+  puts "#{deal.ecid} - #{deal.legal_state_dinamia}"
   set_deal_legal_state(deal, legal_state)
   if record_exists?(deal)
     compare_changes(deal, params)
@@ -87,7 +108,7 @@ CSV.foreach(filepath, csv_options) do |row|
     deal.change_flag = true
     deal.trello_flag = false
     deal.save
-    puts "Creando negocio #{deal.ecid}"
+    puts "Creando negocio #{deal.ecid} #{deal.legal_state_dinamia}"
   end
 end
 
