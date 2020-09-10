@@ -6,12 +6,12 @@ class Deal < ApplicationRecord
   include HTTParty
   include ActiveRecord::Diff
 
-  diff exclude: [:id, :created_at, :updated_at, :change_flag, :trello_flag]
+  diff exclude: [:id, :created_at, :updated_at, :change_flag, :trello_flag, :card_tid]
 
   belongs_to :legal_state
 
   scope :active, -> { joins(:legal_state).where.not(legal_states: {name: "LIBRE"})
-                                         # .where.not(legal_states: {name: "VENDIDA"})
+                                         .where.not(legal_states: {name: "ENTREGADA"})
                                        }
 
   # scope :aprobados, -> { joins(:legal_state).where(legal_states: {name: "APROBADO"})}
