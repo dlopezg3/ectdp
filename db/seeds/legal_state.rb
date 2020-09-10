@@ -1,6 +1,6 @@
-Deal.destroy_all
-LegalStateDuration.destroy_all
-LegalState.destroy_all
+# Deal.destroy_all
+# LegalStateDuration.destroy_all
+# LegalState.destroy_all
 
 legal_states = [
                 { name: "A DESISTIR", board_tid: "5f36fec6e8daef3469ac1b1a", list_id:"5f36fef3caacef66835581f6"},
@@ -42,13 +42,20 @@ legal_states = [
                 { name: "RADICADO EN BANCO Y CAJA", board_tid: "5f331cd2aa36eb25e0ba2327", list_id:"5f331cdc0aee5a416f58ed9a"},
                 { name: "EN ESPERA RESOLUCION MCY PARA ESTUDIO TITULO", board_tid: "5f3ecabe6a9adb3d1376cbce", list_id:"5f3ecabe6a9adb3d1376cbcf"},
                 { name: "NUMERACION ESCRITURA", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f4059d675d279624c0a34bf"},
+                { name: "TRAMITE BANCO 1", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id: "5f36fbc63a1e538518df12a3"},
+                { name: "TRAMITE BANCO 2", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id: "5f593a6df38a3d6115668d29"},
+                { name: "TRAMITE BANCO 3", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id: "5f593a777697cd366ab49fe6"},
+                { name: "TRAMITE DATACREDITO", board_tid: "5f1ef05b5cd4c8412a10ab88", list_id: "5f5a77360643a12c81ffa00d"},
+                { name: "VENDIDA INCONVENIENTES", board_tid: "5f36fec6e8daef3469ac1b1a", list_id: "5f5a7bf8420b6163404e84f3"},
               ]
 
 legal_states.each do |ls|
   list_id = ls[:list_id]
-  puts "Creando #{ls[:name]} - Board Tid: #{ls[:board_tid]}"
-  legal_state = LegalState.new(name: ls[:name], board_tid: ls[:board_tid], list_tid: list_id)
-  legal_state.save
+  if LegalState.find_by(name: ls[:name]).nil?
+    puts "Creando #{ls[:name]} - Board Tid: #{ls[:board_tid]}"
+    legal_state = LegalState.new(name: ls[:name], board_tid: ls[:board_tid], list_tid: list_id)
+    legal_state.save
+  end
 end
 
 puts "Done"
