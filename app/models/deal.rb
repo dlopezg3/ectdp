@@ -33,6 +33,7 @@ class Deal < ApplicationRecord
       card = TrelloCard.new(d)
       card.post
       card.create_compromises_checklist
+      card.add_client_info
     end
   end
 end
