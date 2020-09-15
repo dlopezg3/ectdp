@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_07_194811) do
+ActiveRecord::Schema.define(version: 2020_09_14_184806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 2020_09_07_194811) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["legal_state_id"], name: "index_bank_labels_on_legal_state_id"
+  end
+
+  create_table "custom_fields", force: :cascade do |t|
+    t.string "name"
+    t.string "tid"
+    t.bigint "legal_state_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["legal_state_id"], name: "index_custom_fields_on_legal_state_id"
   end
 
   create_table "deals", force: :cascade do |t|
@@ -51,6 +60,9 @@ ActiveRecord::Schema.define(version: 2020_09_07_194811) do
     t.bigint "second_subsidy_amount"
     t.bigint "swap_amount"
     t.string "card_tid"
+    t.string "client_name"
+    t.string "client_phone"
+    t.string "client_phone_two"
     t.index ["legal_state_id"], name: "index_deals_on_legal_state_id"
   end
 
@@ -113,6 +125,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_194811) do
   end
 
   add_foreign_key "bank_labels", "legal_states"
+  add_foreign_key "custom_fields", "legal_states"
   add_foreign_key "deals", "legal_states"
   add_foreign_key "legal_state_durations", "legal_states"
   add_foreign_key "project_labels", "legal_states"
