@@ -91,7 +91,11 @@ def deal_params(row, legal_state)
     initial_fee_subsidy_amount: row[131],
     second_subsidy_amount: row[132],
     swap_amount: row[134],
-    legal_state_date: set_ls_date(row[117]) }
+    legal_state_date: set_ls_date(row[117]),
+    client_name: row[24],
+    client_phone: row[29],
+    client_phone_two: row[30]
+    }
 end
 
 CSV.foreach(filepath, csv_options) do |row|
