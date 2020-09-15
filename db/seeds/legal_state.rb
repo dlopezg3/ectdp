@@ -16,7 +16,7 @@ legal_states = [
                 { name: "CASO INMOBILIARIA", board_tid: "5f36fec6e8daef3469ac1b1a", list_id:"5f36fec6e8daef3469ac1b1a"},
                 { name: "DESEMBOLSADO", board_tid: "5f371c7f7df57a1f050ba0fb", list_id:"5f371c7f7df57a1f050ba0fc"},
                 { name: "ELAB ESCRITURACION", board_tid: "5f1857980fbd968e3cff4b08", list_id:"5f37046a22ad1929d4cdef32"},
-                { name: "EN ESPERA DE RESOLUCION MCY (PROCESO 027)", board_tid: "", list_id:""},
+                { name: "EN ESPERA DE RESOLUCION MCY (PROCESO 027)", board_tid: "5f331857625722083bc5d3ea", list_id:"5f33185f9c44d701e6dd9512"},
                 { name: "ENTRADA DE REGISTRO", board_tid: "5f371cebf6497f5db4b73b5f", list_id:"5f371cebf6497f5db4b73b60"},
                 { name: "ENTREGA DE VIVIENDA", board_tid: "5f37006b39980f8c9b4e4aef", list_id:"5f37006b39980f8c9b4e4af0"},
                 { name: "ESTUDIO TITULOS", board_tid: "5f43d43591733784b29ee9f5", list_id:"5f43d43591733784b29ee9f6"},
