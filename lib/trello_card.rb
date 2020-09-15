@@ -32,9 +32,9 @@ class TrelloCard
 
   def add_client_info
     valids = ["Teléfono 1","Teléfono 2", "Cliente"]
-    deal.legal_state.custom_fields.each do |cf|
+    @deal.legal_state.custom_fields.each do |cf|
       next unless valids.include? cf.name
-      url = "https://api.trello.com/1/cards/#{deal.card_tid}/customField/#{cf.tid}/item?"
+      url = "https://api.trello.com/1/cards/#{@deal.card_tid}/customField/#{cf.tid}/item?"
       response = HTTParty.put(url, body: client_info_body_params(cf),  query: client_info_query_params)
     end
   rescue Net::ReadTimeout => e
