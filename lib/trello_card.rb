@@ -11,13 +11,37 @@ class TrelloCard
     puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
     raise if retries <= 1
     post(retries - 1)
+  rescue Net::OpenTimeout
+    puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
+    raise if retries <= 1
+    post(retries - 1)
   end
 
   def create_compromises_checklist(retries = 3)
-    puts "#{@deal.card_tid} - #{@deal.ecid} - #{@deal.legal_state.name}"
     checklist_url = "https://api.trello.com/1/cards/#{@deal.card_tid}/checklists?"
     response = HTTParty.post(checklist_url, query: compromise_body_params)
-  rescue => e
+  rescue Net::ReadTimeout => e
+    puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
+    raise if retries <= 1
+    post(retries - 1)
+  rescue Net::OpenTimeout
+    puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
+    raise if retries <= 1
+    post(retries - 1)
+  end
+
+  def add_client_info
+    valids = ["Teléfono 1","Teléfono 2", "Cliente"]
+    deal.legal_state.custom_fields.each do |cf|
+      next unless valids.include? cf.name
+      url = "https://api.trello.com/1/cards/#{deal.card_tid}/customField/#{cf.tid}/item?"
+      response = HTTParty.put(url, body: client_info_body_params(cf),  query: client_info_query_params)
+    end
+  rescue Net::ReadTimeout => e
+    puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
+    raise if retries <= 1
+    post(retries - 1)
+  rescue Net::OpenTimeout => e
     puts "TRY #{retries}/n ERROR: timed out while trying to connect #{e}"
     raise if retries <= 1
     post(retries - 1)
@@ -46,6 +70,28 @@ class TrelloCard
       'token': "#{ENV['TRELLO_TOKEN']}",
       'name': "Compromisos",
     }
+  end
+
+  def client_info_query_params
+    {
+      'key': "#{ENV['TRELLO_KEY']}",
+      'token': "#{ENV['TRELLO_TOKEN']}"
+    }
+  end
+
+  def client_info_body_params(cf)
+    {
+      value: {
+        text: "#{set_custom_field_value(cf)}"
+      }
+    }
+  end
+
+  def set_custom_field_value(cf)
+    cf_name = cf.name
+    return @deal.client_phone     if cf_name == "Teléfono 1"
+    return @deal.client_name      if cf_name == "Cliente"
+    return @deal.client_phone_two if cf_name == "Teléfono 2"
   end
 
   def set_labels
